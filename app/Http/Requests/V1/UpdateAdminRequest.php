@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Http\Requests\V1;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class UpdateAdminRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+       $method=$this->method();
+       if($method == 'PUT'){
+        return [
+            'idUtilisateur'=>['required','integer'],
+            'Role'=>['required','string','min:5'],
+            'Username'=>['required','string','min:5']
+        ];
+       }else{
+        return [
+            'idUtilisateur'=>['sometimes','required','integer'],
+            'Role'=>['sometimes','required','string','min:5'],
+            'Username'=>['sometimes','required','string','min:5']
+        ];
+       }
+    }
+}
